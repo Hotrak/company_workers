@@ -31,8 +31,6 @@
                 class="buttonText--text" >
                 Добавить
             </v-btn>
-<!--            @click="showWorkerFrom"-->
-
 
         </v-card-title>
         <v-data-table
@@ -44,16 +42,14 @@
             :options.sync="pagination"
             :footer-props="{'items-per-page-options': rowsPerPageItems}"
             must-sort
-
-
         >
+            <template v-slot:item.boss_surname="{ item }">
+                {{item.boss_surname?`${item.boss_surname} ${item.boss_name}`:''}}
+            </template>
             <template v-slot:item.img="{ item }">
                <v-img class="my-1" width="75" :aspect-ratio="3/4" :src="imgUrl(item)"/>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-btn  @click="showSwapDialog(item)" fab outlined x-small class="mx-2" color="warning">
-                    <v-icon small>mdi-swap-horizontal</v-icon>
-                </v-btn>
                 <v-btn  :to="`/workers/${item.id}/edit`" fab outlined x-small class="mx-2" color="warning">
                     <v-icon small>mdi-pencil</v-icon>
                 </v-btn>
@@ -66,18 +62,21 @@
             </template>
 
         </v-data-table>
+        <swap-form :item="swapWorker" :dialog="swapDialog" @close="swapDialog=false" />
     </v-card>
 </template>
 <script>
     import {mapActions} from "vuex"
+    import SwapForm from "../components/SwapForm";
     export default {
+        components: {SwapForm},
         data: () => ({
             headers: [
                 { text: '  ', value: 'img', sortable:false, },
                 { text: 'Фамилия', value: 'surname' },
                 { text: 'Имя',value: 'name', },
                 { text: 'Отчество', value: 'patronymic' },
-                { text: 'Прием на работу', value: 'employment_date' },
+                { text: 'Дата приёма на работу', value: 'employment_date' },
                 { text: 'Зарплата(руб)', value: 'salary' },
                 { text: 'Должность', value: 'position_name' },
                 { text: 'Начальник(ца)', value: 'boss_surname' },
@@ -113,6 +112,7 @@
             employmentDate:'',
 
             swapDialog:false,
+            swapWorker:{},
         }),
         computed:{
             workers(){
@@ -171,9 +171,7 @@
                 let index = item.img.search('https');
                 return index === 0? item.img : '/storage/'+item.img;
             },
-            showSwapDialog(item){
-                this.swapDialog = true;
-            }
+
         }
     }
 </script>

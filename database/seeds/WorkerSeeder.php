@@ -11,42 +11,38 @@ class WorkerSeeder extends Seeder
      */
     public function run()
     {
-//        $position = App\Position::create(['name'=>'Генеральный директор','lvl'=>1]);
-//        $position = App\Position::create(['name'=>'Директор','lvl'=>2]);
-//        $position = App\Position::create(['name'=>'Зам директора','lvl'=>3]);
         $positions = [];
-//        $positions[] = App\Position::create(['name'=>'Руководитель проекта','lvl'=>4]);
-//        $positions[] = App\Position::create(['name'=>'Главный тестировщик','lvl'=>5]);
-//        $positions[] = App\Position::create(['name'=>'Тестировщик','lvl'=>6]);
-//        $positions[] = App\Position::create(['name'=>'Главный дизайнер','lvl'=>5]);
-//        $positions[] = App\Position::create(['name'=>'Дизайнер','lvl'=>6]);
-//        $positions[] = App\Position::create(['name'=>'Главный программист','lvl'=>5]);
-//        $positions[] = App\Position::create(['name'=>'Программист','lvl'=>6]);
-
-        $positions[] = App\Position::create(['name'=>'Должность 1','lvl'=>0]);
-        $positions[] = App\Position::create(['name'=>'Должность 2','lvl'=>1]);
-        $positions[] = App\Position::create(['name'=>'Должность 3','lvl'=>2]);
-        $positions[] = App\Position::create(['name'=>'Должность 4','lvl'=>3]);
-        $positions[] = App\Position::create(['name'=>'Должность 5','lvl'=>4]);
-
-//        $position = App\Position::create(['name'=>'Секретарь']);
+        $positions[] = App\Position::create(['name'=>'Генеральный директор','lvl'=>0]);
+        $positions[] = App\Position::create(['name'=>'Исполнительный директор','lvl'=>1]);
+        $positions[] = App\Position::create(['name'=>'Директор','lvl'=>2]);
+        $positions[] = App\Position::create(['name'=>'Руководитель проекта','lvl'=>3]);
+        $positions[] = App\Position::create(['name'=>'Тестировщик','lvl'=>4]);
+        $positions[] = App\Position::create(['name'=>'Дизайнер','lvl'=>4]);
+        $positions[] = App\Position::create(['name'=>'Разработчик','lvl'=>4]);
+//
+//        $positions[] = App\Position::create(['name'=>'Должность 1','lvl'=>0]);
+//        $positions[] = App\Position::create(['name'=>'Должность 2','lvl'=>1]);
+//        $positions[] = App\Position::create(['name'=>'Должность 3','lvl'=>2]);
+//        $positions[] = App\Position::create(['name'=>'Должность 4','lvl'=>3]);
+//        $positions[] = App\Position::create(['name'=>'Должность 5','lvl'=>4]);
         $count = 0;
+        $index = 1;
         foreach ($positions as $position){
             switch ($position->lvl){
                 case 0:
-                    $count = 30/10;
+                    $count = 20/$index;
                     break;
                 case 1:
-                    $count = 240/10;
+                    $count = 240/$index;
                     break;
                 case 2:
-                    $count = 1920/10;
+                    $count = 1920/$index;
                     break;
                 case 3:
-                    $count = 15360/10;
+                    $count = 15360/$index;
                     break;
                 case 4:
-                    $count = 32450/10;
+                    $count = 32451/3/$index;
                     break;
             }
 

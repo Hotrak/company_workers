@@ -27,6 +27,9 @@ export default {
                     headers: {'Content-Type': 'multipart/form-data'}
                 })
         },
+        async updateWorkerBoss({commit},payload){
+            return await axios.put(`/api/workers/boss/update`,payload)
+        },
         async deleteWorker({commit},payload){
             return await axios.delete(`/api/workers/${payload.id}`,payload)
         },

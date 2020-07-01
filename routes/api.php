@@ -32,6 +32,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/workers', 'WorkerController@store');
     Route::put('/workers/{id}', 'WorkerController@update');//+++
+    Route::put('/workers/boss/update', 'WorkerController@updateBoss');
     Route::get('/workers/{id}', 'WorkerController@show');
     Route::delete('/workers/{id}', 'WorkerController@destroy');
 

@@ -2,21 +2,25 @@
     <v-form
         ref="form"
         v-model="formValid">
-        <v-card>
+        <v-card :loading="loading">
             <v-card-title>
-                {{title}}
+                <span>{{title}}</span>
+                <v-spacer/>
+                <v-btn  @click="showSwapDialog()" fab outlined x-small class="mx-2" color="primary">
+                    <v-icon small>mdi-swap-horizontal</v-icon>
+                </v-btn>
             </v-card-title>
             <v-card-text>
 
                 <v-row>
-                    <v-col>
-                        <v-card  color="background_panel">
-                            <v-img :aspect-ratio="3/4"  :src="imgUrl"  @click="onPickFile"/>
+                    <v-col cols="12" md="3">
+                        <v-card  color="background_panel"  @click="onPickFile">
+                            <v-img :aspect-ratio="3/4"  :src="imgUrl"  />
                             <input name="imgData" hidden type="file" ref="fileInput" accept="image/*" @change="onFilePicked"/>
 
                         </v-card>
                     </v-col>
-                    <v-col>
+                    <v-col cols="12" md="4">
                         <v-card  color="background_panel">
                             <v-card-text>
                                 <v-col cols="12">
@@ -31,7 +35,7 @@
                             </v-card-text>
                         </v-card>
                     </v-col>
-                    <v-col>
+                    <v-col cols="12" md="4">
                         <v-card  color="background_panel">
                             <v-card-text>
                                 <v-col cols="12">
@@ -96,14 +100,20 @@
             :message="dialog.message"
             @close="dialog.dialog = false"
         />
+        <swap-form
+            v-if="isUpdate"
+            :dialog="swapDialog"
+            :item="swapWorker"
+            @close="swapDialog = false"
+        />
     </v-form>
 </template>
 <script>
     import {mapActions} from 'vuex'
-    import WorkerFormTest from "../components/WorkerFormTest";
     import InfoDialog from "../components/InfoDialog";
+    import SwapForm from "../components/SwapForm";
     export default {
-        components: {InfoDialog, WorkerFormTest},
+        components: {SwapForm, InfoDialog},
         data:()=>({
             nameRules: [
                 v => !!v || 'Поле обязательно для заполнения',
@@ -113,7 +123,6 @@
             ],
             mustRules: [
                 v => !!v || 'Поле обязательно для заполнения',
-
             ],
             salaryRules:[
                 v => !!v || 'Поле обязательно для заполнения',
@@ -124,7 +133,6 @@
                 dialog:false,
                 title:'',
                 message:'',
-
             },
             formValid:false,
             form:null,
@@ -138,6 +146,9 @@
             imageUrl:'',
             isNewImg:false,
             editItem:{},
+            swapDialog:false,
+            swapWorker:{},
+            loading:false,
         }),
         mounted(){
             this.loadPositions();
@@ -212,9 +223,11 @@
                     .finally(() => this.workersLoading = false)
             },
             loadWorker(id){
+                this.loading = true;
                 this.fetchWorker({id})
                     .then(response=>this.editItem = response.data.worker)
                     .catch(errors=>console.log(errors))
+                    .finally(() => this.loading = false)
             },
             store(data){
                 this.storeWorker(data)
@@ -266,10 +279,13 @@
                 this.imageUrl = '';
             },
             showDialog(title,message){
-                console.log("SHOW DIALOG");
                 this.dialog.title = title;
                 this.dialog.message = message;
                 this.dialog.dialog = true;
+            },
+            showSwapDialog(){
+                this.swapDialog = true;
+                this.swapWorker = this.editItem;
             }
         },
         computed:{

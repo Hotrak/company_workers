@@ -28,7 +28,7 @@
                         <v-spacer />
                         <v-form lazy-validation>
                             <v-text-field
-                                label="e-mail"
+                                label="E-mail"
                                 name="login"
                                 prepend-icon="mdi-email"
                                 type="email"

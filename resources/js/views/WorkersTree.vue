@@ -166,10 +166,10 @@
                 if (!items) {
                     return;
                 }
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
                     // Test current object
-                    // console.log(`${item.id} === ${id}`);
+                    console.log(`${item.id} === ${id}`);
 
                     if (item.id == id) {
                         return item;
@@ -183,39 +183,51 @@
             },
             checkStart(evt) {
                 console.log(evt);
-                this.draggableItem = this.findTreeItem(this.workersData.data,evt.from.id);
-                console.log(this.draggableItem);
+                this.draggableItem = this.findTreeItem(this.workers,evt.from.id);
+                console.log('FROM: ' +evt.from.id);
+                console.log('DRAGGABLE_ITEM:',this.draggableItem);
             },
             checkEnd(evt) {
-                console.log(evt);
+                console.log('TO: ' +evt.to.id);
                 console.log("PARENT_ID: "+this.draggableItem.parent_id);
+                if(evt.from.id === evt.to.id)
+                    return;
 
                 if(this.draggableItem.parent_id){
                     let draggableItemParent = this.findTreeItem(this.workersData.data, this.draggableItem.parent_id);
 
                     const index = draggableItemParent.children.indexOf(this.draggableItem);
                     draggableItemParent.children.splice(index,1);
+                    const children = draggableItemParent.children;
+                    draggableItemParent.children = [];
+                    this.setChildren(draggableItemParent,[...[this.draggableItem],...children]);
+
                 }else{
                     const index = this.workersData.data.indexOf(this.draggableItem);
                     this.workersData.data.splice(index,1);
                 }
 
                 let newParentDraggableItem = this.findTreeItem(this.workersData.data, evt.to.id);
-                this.draggableItem.parent_id = newParentDraggableItem.id;
+                this.draggableItem.parent_id = evt.to.id;
 
                 const index = this.open.indexOf(newParentDraggableItem);
                 if(index!==-1){
                     console.log("ADD");
                     // newParentDraggableItem.children = [];
                     // setChildren
-                    newParentDraggableItem.children.forEach(item=>{
-                        const children = item.children;
-                        item.children = [];
-                        this.setChildren(item,children)
-                    });
+
                     // this.setChildren(newParentDraggableItem,[this.draggableItem]);
-                    newParentDraggableItem.children.push(this.draggableItem);
                 }
+                const children = newParentDraggableItem.children;
+                newParentDraggableItem.children = [];
+                this.setChildren(newParentDraggableItem,[...[this.draggableItem],...children]);
+                // newParentDraggableItem.children.forEach(item=>{
+                //     const children = item.children;
+                //     item.children = [];
+                //     this.setChildren(item,children)
+                // });
+                // newParentDraggableItem.children.push();
+
             },
             // checkStart(evt) {
             //    console.log(evt);

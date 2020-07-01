@@ -103,6 +103,14 @@ class WorkerController extends Controller
         return ['worker' => $worker];
     }
 
+    public function updateBoss(Request $request){
+
+        Worker::where('parent_id','=',$request->old_boss_id)
+            ->update(['parent_id'=>$request->boss_id]);
+
+        return "OK";
+    }
+
     public function destroy($id)
     {
         $worker = Worker::find($id);
