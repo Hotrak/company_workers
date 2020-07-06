@@ -81,7 +81,8 @@
                 return [
                     {
                         text:'Иерархия Сотрудников',
-                        icon:'mdi-account',
+                        icon:'mdi-account-group',
+
                         link:{name:'workers-tree'},
 
                     }
@@ -91,7 +92,7 @@
                 return [
                     {
                         text:'Сотрудники',
-                        icon:'mdi-home',
+                        icon:'mdi-account',
                         link:{name:'workers'},
                     },
                 ]

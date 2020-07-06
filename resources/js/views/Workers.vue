@@ -28,7 +28,9 @@
             <v-btn
                 color="primary"
                 to="workers/create"
-                class="buttonText--text" >
+                class="buttonText--text"
+            >
+                <v-icon left>mdi-account-plus</v-icon>
                 Добавить
             </v-btn>
 
