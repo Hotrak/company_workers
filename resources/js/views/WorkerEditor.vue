@@ -6,7 +6,7 @@
             <v-card-title>
                 <span>{{title}}</span>
                 <v-spacer/>
-                <v-btn  @click="showSwapDialog()" fab outlined x-small class="mx-2" color="primary">
+                <v-btn v-if="isUpdate" @click="showSwapDialog()" fab outlined x-small class="mx-2" color="primary">
                     <v-icon small>mdi-swap-horizontal</v-icon>
                 </v-btn>
             </v-card-title>
@@ -91,7 +91,12 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn color="primary" @click="onSubmit">Сохранить</v-btn>
+                <v-btn
+                    color="primary"
+                    @click="onSubmit"
+                    :loading="loading">
+                    {{this.isUpdate?'Сохранить':'Добавить'}}
+                </v-btn>
             </v-card-actions>
         </v-card>
         <info-dialog
@@ -230,6 +235,7 @@
                     .finally(() => this.loading = false)
             },
             store(data){
+                this.loading = true;
                 this.storeWorker(data)
                     .then(response => {
                         console.log(response.data);
@@ -237,8 +243,11 @@
                         this.reset()
                     })
                     .catch(errors => console.log(errors))
+                    .finally(() => this.loading = false)
             },
             update(data){
+                this.loading = true;
+
                 let payload = {
                     id:this.editItem.id,
                     data:data,
@@ -249,6 +258,7 @@
                         console.log(response.data);
                     })
                     .catch(errors => console.log(errors))
+                    .finally(() => this.loading = false)
             },
             onPickFile(){
                 this.$refs.fileInput.click();
@@ -294,7 +304,6 @@
             },
             isUpdate(){
                 return this.editItem.id;
-
             },
             workers(){
                 if(this.isUpdate)

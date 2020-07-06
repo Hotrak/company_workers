@@ -104,8 +104,8 @@ class WorkerController extends Controller
         return ['worker' => $worker];
     }
 
-    public function updateBoss(Request $request){
-
+    public function updateBoss(Request $request)
+    {
         Worker::where('parent_id','=',$request->old_boss_id)
             ->update(['parent_id'=>$request->boss_id]);
 
@@ -116,7 +116,7 @@ class WorkerController extends Controller
     {
         $worker = Worker::find($id);
 
-        Worker::where('parent_id','=',$worker.id)
+        Worker::where('parent_id','=',$worker->id)
             ->update(['parent_id'=>$worker->parent_id]);
 
         $worker->delete();

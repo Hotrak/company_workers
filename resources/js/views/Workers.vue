@@ -158,11 +158,14 @@
                     .finally(() => this.loading = false);
 
             },
-            onDeleteWorker(item){
+            deleteItem(item){
                 const index = this.workersData.data.indexOf(item);
                 this.workersData.data.splice(index,1);
 
                 this.deleteWorker(item)
+            },
+            onDeleteWorker(item){
+                confirm('Удалить данного сотрудника ?') && this.deleteItem(item);
             },
             paginate (val) {
                 this.loadWorkers();

@@ -1,6 +1,5 @@
 <template>
     <v-app id="inspire" :style="{background: $vuetify.theme.themes[theme].background}">
-<!--        :style="{background: $vuetify.theme.themes[theme].background}"-->
         <v-navigation-drawer
             v-model="drawer"
             app
@@ -50,12 +49,12 @@
                 <router-view></router-view>
             </v-container>
         </v-main>
-        <v-footer
-            color="primary"
-            app
-        >
-            <span class="white--text">&copy; 2020</span>
-        </v-footer>
+<!--        <v-footer-->
+<!--            color="primary"-->
+<!--            app-->
+<!--        >-->
+<!--            <span class="white&#45;&#45;text">&copy; 2020</span>-->
+<!--        </v-footer>-->
     </v-app>
 </template>
 
@@ -87,7 +86,6 @@
 
                     }
                 ]
-
             },
             authorizeMenuItems(){
                 return [

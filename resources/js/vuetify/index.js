@@ -15,11 +15,11 @@ export default new Vuetify({
                 secondary: colors.grey.darken1,
                 accent: colors.shades.black,
                 error: colors.red.accent3,
-                background: '#d6d6d6', // Not automatically applied
+                background: '#d6d6d6',
             },
             dark: {
                 primary: colors.blue.lighten3,
-                background: colors.indigo.base, // If not using lighten/darken, use base to return hex
+                background: colors.indigo.base,
             },
         },
 
@@ -29,6 +29,6 @@ export default new Vuetify({
         current: 'ru',
     },
     icons: {
-        iconfont: 'mdi', // default - only for display purposes
+        iconfont: 'mdi',
     },
 })
