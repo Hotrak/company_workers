@@ -42,7 +42,7 @@ class WorkerSeeder extends Seeder
                     $count = 15360/$index;
                     break;
                 case 4:
-                    $count = 32451/3/$index;
+                    $count = 32460/$index;
                     break;
             }
 

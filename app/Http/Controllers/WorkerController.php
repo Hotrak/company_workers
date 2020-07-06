@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DriverRequest;
+use App\Http\Requests\WorkerRequest;
 use App\Worker;
 use DateTime;
 use Illuminate\Http\Request;
@@ -78,7 +78,7 @@ class WorkerController extends Controller
         return ['worker' => $worker];
     }
 
-    public function store(DriverRequest $request)
+    public function store(WorkerRequest $request)
     {
         $path = $request->file('img_url')->store('uploads','public');
         $request['img'] = $path;
