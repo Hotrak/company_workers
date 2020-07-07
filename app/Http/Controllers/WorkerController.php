@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Psy\Util\Str;
 
 class WorkerController extends Controller
 {
@@ -82,6 +83,9 @@ class WorkerController extends Controller
     {
         $path = $request->file('img_url')->store('uploads','public');
         $request['img'] = $path;
+        $request['name'] = mb_convert_case($request->name, MB_CASE_TITLE, "UTF-8");
+        $request['surname'] = mb_convert_case($request->surname, MB_CASE_TITLE, "UTF-8");
+        $request['patronymic'] = mb_convert_case($request->patronymic, MB_CASE_TITLE, "UTF-8");
 
         $worker = Worker::create($request->all());
         return ['worker' => $worker];
@@ -98,6 +102,10 @@ class WorkerController extends Controller
 
         if(!$request->has('parent_id'))
             $request['parent_id'] = null;
+
+        $request['name'] = mb_convert_case($request->name, MB_CASE_TITLE, "UTF-8");
+        $request['surname'] = mb_convert_case($request->surname, MB_CASE_TITLE, "UTF-8");
+        $request['patronymic'] = mb_convert_case($request->patronymic, MB_CASE_TITLE, "UTF-8");
 
         $worker->fill($request->all());
         $worker->save();
